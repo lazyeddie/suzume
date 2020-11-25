@@ -3,8 +3,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const router = require('./routes/posts.js');
+const dotenv = require('dotenv');
 
 const app = express();
+
+dotenv.config({ path: './.env' });
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
@@ -15,8 +18,8 @@ app.get('/', (req, res) => {
   res.send('Welcome to Suzume');
 })
 
-const CONNECTION_URL = 'mongodb+srv://CALDERA_aDa_689:Ada_secP8786@cluster0.iwyv5.mongodb.net/<dbname>?retryWrites=true&w=majority';
 const PORT = process.env.PORT|| 5000;
+const CONNECTION_URL = process.env.CONNECTION_URL; 
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => app.listen(PORT, () => console.log(`Server Running on Port: ${PORT}`)))
